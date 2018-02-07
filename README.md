@@ -13,6 +13,11 @@ Note: this is the current underlying implementation for https://www.npmjs.com/pa
 # Interaction with Camera Plugin
 If you are installing this plugin along with cordova-plugin-camera you **MUST install cordova-plugin-camera first.**
 
+Steps:
+1 - Install camera plugin.
+2 - Add android platform.
+3 - Install this plugin.
+
 # Overview
 This Cordova plugin provides a general purpose shim layer for the Android intent mechanism, exposing various ways to handle sending and receiving intents.
 
