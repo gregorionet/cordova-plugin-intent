@@ -335,28 +335,35 @@ public class IntentShim extends CordovaPlugin {
 
         for (String key : extras.keySet()) {
             String value = extras.get(key);
-            // If type is text html, the extra text must sent as HTML
-            if (key.equals(Intent.EXTRA_TEXT) && type.equals("text/html")) {
-                i.putExtra(key, Html.fromHtml(value));
-            } else if (key.equals(Intent.EXTRA_STREAM)) {
-                // allows sharing of images as attachments.
-                // value in this case should be a URI of a file
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && value.startsWith("file://"))
-                {
-                    Uri uriOfStream = remapUriWithFileProvider(value, callbackContext);
-                    if (uriOfStream != null)
-                        i.putExtra(key, uriOfStream);
-                }
-                else
-                {
-                    final CordovaResourceApi resourceApi = webView.getResourceApi();
-                    i.putExtra(key, resourceApi.remapUri(Uri.parse(value)));
-                }
-            } else if (key.equals(Intent.EXTRA_EMAIL)) {
-                // allows to add the email address of the receiver
-                i.putExtra(Intent.EXTRA_EMAIL, new String[] { value });
+
+            // If extra name is amount, adds a double (for mPos)
+            if (key.equals("amount")) {
+                double valueInDouble = Double.parseDouble(value);
+                i.putExtra(key, valueInDouble);
             } else {
-                i.putExtra(key, value);
+                // If type is text html, the extra text must sent as HTML
+                if (key.equals(Intent.EXTRA_TEXT) && type.equals("text/html")) {
+                    i.putExtra(key, Html.fromHtml(value));
+                } else if (key.equals(Intent.EXTRA_STREAM)) {
+                    // allows sharing of images as attachments.
+                    // value in this case should be a URI of a file
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && value.startsWith("file://"))
+                    {
+                        Uri uriOfStream = remapUriWithFileProvider(value, callbackContext);
+                        if (uriOfStream != null)
+                            i.putExtra(key, uriOfStream);
+                    }
+                    else
+                    {
+                        final CordovaResourceApi resourceApi = webView.getResourceApi();
+                        i.putExtra(key, resourceApi.remapUri(Uri.parse(value)));
+                    }
+                } else if (key.equals(Intent.EXTRA_EMAIL)) {
+                    // allows to add the email address of the receiver
+                    i.putExtra(Intent.EXTRA_EMAIL, new String[] { value });
+                } else {
+                    i.putExtra(key, value);
+                }
             }
         }
 
@@ -556,5 +563,3 @@ public class IntentShim extends CordovaPlugin {
         }
     }
 }
-
-
