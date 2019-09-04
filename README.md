@@ -8,6 +8,9 @@
 
 This is a fork of https://github.com/darryncampbell/darryncampbell-cordova-plugin-intent
 
+##Install
+cordova plugin add https://github.com/gregorionet/cordova-plugin-intent.git
+
 Note: this is the current underlying implementation for https://www.npmjs.com/package/@ionic-native/web-intent and https://ionicframework.com/docs/native/web-intent/
 
 # Interaction with Camera Plugin
